@@ -1,7 +1,49 @@
-/*
+ /*
  * Create a list that holds all of your cards
  */
-
+var numberOfGames = 0;
+var dashboardPositions = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+var cardOptions = ["fa-address-book-o",
+			 "fa-address-card",
+			 "fa-address-card-o",
+			 "fa-bandcamp",
+			 "fa-bath",
+			 "fa-bathtub",
+			 "fa-drivers-license",
+			 "fa-drivers-license-o",
+			 "fa-eercast",
+			 "fa-envelope-open",
+			 "fa-envelope-open-o",
+			 "fa-etsy",
+			 "fa-free-code-camp",
+			 "fa-grav",
+			 "fa-handshake-o",
+			 "fa-id-badge",
+			 "fa-id-card",
+			 "fa-id-card-o",
+			 "fa-imdb",
+			 "fa-linode",
+			 "fa-meetup",
+			 "fa-microchip",
+			 "fa-podcast",
+			 "fa-quora",
+			 "fa-ravelry",
+			 "fa-s15",
+			 "fa-shower",
+			 "fa-snowflake-o",
+			 "fa-superpowers",
+			 "fa-telegram",
+			 "fa-thermometer-empty",
+			 "fa-thermometer-full",
+			 "fa-thermometer-half",
+			 "fa-thermometer-quarter",
+			 "fa-thermometer-three-quarters",
+			 "fa-times-rectangle",
+			 "fa-times-rectangle-o",
+			 "fa-user-circle",
+			 "fa-user-circle-o",
+			 "fa-plug"
+		 ];
 
 /*
  * Display the cards on the page
@@ -9,7 +51,12 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-
+/* At game start:
+ *	1 - Shufle cardOptions array.
+ * 	2 - Shuffle dashboardPositions array.
+ *	3 - Assign the (4 * numberOfGames) first cards from cardOptions array to $('li.card i.fa') elements.
+ *		3.1 Increase numberOfGames by 1
+ */
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -24,6 +71,59 @@ function shuffle(array) {
 
     return array;
 }
+
+// 3 - Assign the (8 * numberOfGames) first cards from cardOptions array to $('li.card i.fa') elements.
+// 	3.1 Increase numberOfGames by 1
+function setDashboardCards () {
+	var htmlCards = $('li.card');
+	var htmlCardsIndex = 0;
+	console.log('dashboardPositions.length: '+dashboardPositions.length);
+	console.log('dashboardPositions: '+dashboardPositions);
+	for (var i = 0; i < dashboardPositions.length; i += 2) {
+		/* THIS DOSN'T WORK
+		console.log(dashboardPositions[i]);
+		console.log(dashboardPositions[i+1]);
+		console.log('cardOptions[i+numberOfGames]: '+cardOptions[i+numberOfGames]);
+		var innerHtml = '<i class="fa '+cardOptions[i+numberOfGames]+'></i>';
+		console.log('innerHtml: '+innerHtml);
+		console.log($('li.card').eq(dashboardPositions[i]).html("<p>Hola Caracola</p>"));
+		console.log($('li.card').eq(dashboardPositions[i]).html());
+		console.log($('li.card').eq(dashboardPositions[i+1]).html(innerHtml));
+		console.log($('li.card').eq(dashboardPositions[i+1]).html());
+
+		$('li.card').eq(dashboardPositions[i]).html(innerHtml);
+		$('li.card').eq(dashboardPositions[i+1]).html(innerHtml);
+		*/
+
+		var cardOptionosi = '<i class="fa '+cardOptions[i+numberOfGames]+'></i>';
+		console.log('innerHtml: '+cardOptionosi);
+		console.log($('li.card li.fa').eq(dashboardPositions[i]).attr('class'));
+		$('li.card i.fa').eq(dashboardPositions[i]).attr('class', 'fa '+cardOptions[i]);
+		$('li.card i.fa').eq(dashboardPositions[i+1]).attr('class', 'fa '+cardOptions[i]);
+
+
+	}
+
+
+	// for (var cardNumber = 0; cardNumber<8; cardNumber++) {
+	// 	for (var assignTwice = 0; assignTwice<2; assignTwice++) {
+	// 		$(htmlCards).eq(dashboardPositions[positionHtmlCards]).html('<i class="fa '+cardOptions[cardNumber]+'></i>');
+	// 		console.log($(htmlCards).eq(positionHtmlCards).html());
+	// 		positionHtmlCards++;
+	// 	}
+	// }
+	numberOfGames++;
+}
+
+
+$(function (){
+	// console.log('cardOptions: '+cardOptions);
+	// console.log('dashboardPositions: '+dashboardPositions)
+	// 1 - Shufle cardOptions array.
+	shuffle(cardOptions);
+	shuffle(dashboardPositions);
+	setDashboardCards();
+});
 
 
 /*
