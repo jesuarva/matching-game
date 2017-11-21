@@ -1,8 +1,12 @@
  /*
- * Create a list that holds all of your cards
+ * VARIABLES
  */
 var gamesPlayed = 0;
 var dashboardPositions = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+var compareCard = [];
+var matchedCards = 0;
+// Multiple icons to allow few repetitions in nwew games.
+// TODO: when improving the game so user can select a level, this multiple icons help in that matter.
 var cardOptions = ["fa-address-book-o",
 			 "fa-address-card",
 			 "fa-address-card-o",
@@ -97,9 +101,9 @@ function setDashboardCards () {
 		$('li.card').eq(dashboardPositions[i+1]).html(innerHtml);
 		*/
 
-		var cardOptionosi = '<i class="fa '+cardOptions[i+gamesPlayed]+'></i>';
-		console.log('innerHtml: '+cardOptionosi);
-		console.log($('li.card li.fa').eq(dashboardPositions[i]).attr('class'));
+		// var cardOptionosi = '<i class="fa '+cardOptions[i+gamesPlayed]+'></i>';
+		// console.log('innerHtml: '+cardOptionosi);
+		// console.log($('li.card li.fa').eq(dashboardPositions[i]).attr('class'));
 		$('li.card i.fa').eq(dashboardPositions[i]).attr('class', 'fa '+cardOptions[j+gamesPlayed]);
 		$('li.card i.fa').eq(dashboardPositions[i+1]).attr('class', 'fa '+cardOptions[j+gamesPlayed]);
 		j++;
@@ -108,10 +112,9 @@ function setDashboardCards () {
 	gamesPlayed++;
 }
 
-// FUNCTION newgGame
+// FUNCTION newGame
 function newGame () {
-
-	// shuffle(dashboardPositions);
+	shuffle(dashboardPositions);
 	setDashboardCards();
 }
 
@@ -125,16 +128,74 @@ function newGame () {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+ // If cards are no equals then hide cards.
+ function hideCard () {
+ 	for (var i = 0; i < 2; i++){
+ 		$(compareCard[i][0]).attr('class', 'card');
+ 		// $(compareCard[i][0]).toggleClass('show');
+ 	}
+ 	compareCard = [];
+ }
+// If cards are equals remove on.click event and fix cards
+function cardsMatch () {
+	for (var i = 0; i < 2; i++){
+		$(compareCard[i][0]).off('click');
 
+	}
+	compareCard = [];
+}
 
+ // Set on.click event for cards.
+ function	cardOnClick() {
+
+	 // $('.card').on('click', function (e){
+	 $('.card').on('click', function (e){
+		 // toggle to open
+		 $(this).toggleClass('open');
+		 // toggle to visible
+		 $(this).toggleClass('show');
+
+		 // ADD clicked card to comparedCard array
+		 // [element.clicked, element.html()]
+		 compareCard.push([$(this),$(this).html()]);
+
+		 // Logic whne 2 cards have been cliked.
+		 if( compareCard.length == 2 ){
+			 /* DIDN'T WORK
+				 // // toggle to open
+				 // $(this).toggleClass('open');
+				 // // toggle to visible
+				 // $(this).toggleClass('show');
+			 */
+			 console.log(compareCard[1][1]);
+			 console.log(compareCard[0][1]);
+			 console.log(compareCard[0][1] === compareCard[1][1]);
+			 if ( compareCard[0][1] === compareCard[1][1] ) {
+				 console.log("Cartas son iguales");
+				 console.log(compareCard);
+				 cardsMatch();
+			 } else {
+				 console.log("cartas no son iguales");
+				 console.log(compareCard);
+				 // toggle to open and DELAY this action.
+				 setTimeout(hideCard,300);
+		 } // end if-else
+
+	 } //end if (cmapareCard.length == 2)
+
+})
+} // end cardOnClick()
 
 
  /* LAUNCH APP.JS
  */
  $(function (){
- 	// Shuffle Cards at the very beginning
- 	shuffle(cardOptions);
- 	// Launch a starting game
- 	newGame();
- 	$('li.card').attr('class', 'card open show');
+	 /* Launch event handlers */
+	 // card.on.click
+	 cardOnClick();
+	 // Shuffle Cards at the very beginning
+	 shuffle(cardOptions);
+	 // Launch a starting game
+	 newGame();
+	 $('li.card').attr('class', 'card');
  });
