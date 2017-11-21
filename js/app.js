@@ -1,6 +1,4 @@
- /*
- * VARIABLES
- */
+ /* VARIABLES */
 var gamesPlayed = 0;
 var dashboardPositions = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 var compareCard = [];
@@ -8,46 +6,48 @@ var matchedCards = 0;
 // Multiple icons to allow few repetitions in nwew games.
 // TODO: when improving the game so user can select a level, this multiple icons help in that matter.
 var cardOptions = ["fa-address-book-o",
-			 "fa-address-card",
-			 "fa-address-card-o",
-			 "fa-bandcamp",
-			 "fa-bath",
-			 "fa-bathtub",
-			 "fa-drivers-license",
-			 "fa-drivers-license-o",
-			 "fa-eercast",
-			 "fa-envelope-open",
-			 "fa-envelope-open-o",
-			 "fa-etsy",
-			 "fa-free-code-camp",
-			 "fa-grav",
-			 "fa-handshake-o",
-			 "fa-id-badge",
-			 "fa-id-card",
-			 "fa-id-card-o",
-			 "fa-imdb",
-			 "fa-linode",
-			 "fa-meetup",
-			 "fa-microchip",
-			 "fa-podcast",
-			 "fa-quora",
-			 "fa-ravelry",
-			 "fa-reddit-alien",
-			 "fa-shower",
-			 "fa-snowflake-o",
-			 "fa-superpowers",
-			 "fa-telegram",
-			 "fa-thermometer-empty",
-			 "fa-thermometer-full",
-			 "fa-thermometer-half",
-			 "fa-thermometer-quarter",
-			 "fa-thermometer-three-quarters",
-			 "fa-times-rectangle",
-			 "fa-times-rectangle-o",
-			 "fa-user-circle",
-			 "fa-user-circle-o",
-			 "fa-plug"
-		 ];
+									 "fa-address-card",
+									 "fa-address-card-o",
+									 "fa-bandcamp",
+									 "fa-bath",
+									 "fa-bathtub",
+									 "fa-drivers-license",
+									 "fa-drivers-license-o",
+									 "fa-eercast",
+									 "fa-envelope-open",
+									 "fa-envelope-open-o",
+									 "fa-etsy",
+									 "fa-free-code-camp",
+									 "fa-grav",
+									 "fa-handshake-o",
+									 "fa-id-badge",
+									 "fa-id-card",
+									 "fa-id-card-o",
+									 "fa-imdb",
+									 "fa-linode",
+									 "fa-meetup",
+									 "fa-microchip",
+									 "fa-podcast",
+									 "fa-quora",
+									 "fa-ravelry",
+									 "fa-reddit-alien",
+									 "fa-shower",
+									 "fa-snowflake-o",
+									 "fa-superpowers",
+									 "fa-telegram",
+									 "fa-thermometer-empty",
+									 "fa-thermometer-full",
+									 "fa-thermometer-half",
+									 "fa-thermometer-quarter",
+									 "fa-thermometer-three-quarters",
+									 "fa-times-rectangle",
+									 "fa-times-rectangle-o",
+									 "fa-user-circle",
+									 "fa-user-circle-o",
+									 "fa-plug"
+								 ];
+var moves = 0;
+/* END VARIABLES */
 
 /*
  * Display the cards on the page
@@ -61,6 +61,8 @@ var cardOptions = ["fa-address-book-o",
  *	3 - Assign the (4 * gamesPlayed) first cards from cardOptions array to $('li.card i.fa') elements.
  *		3.1 Increase gamesPlayed by 1
  */
+
+/* FUNCTIONS */
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -111,8 +113,14 @@ function setDashboardCards () {
 
 	gamesPlayed++;
 }
-
-// FUNCTION newGame
+// Hide all cards
+function hideCards (){}
+// totalMoves count
+function totalMoves () {
+	moves++;
+	$('.moves').text(moves);
+}
+// newGame
 function newGame () {
 	shuffle(dashboardPositions);
 	setDashboardCards();
@@ -128,15 +136,17 @@ function newGame () {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
- // If cards are no equals then hide cards.
- function hideCard () {
+
+/*GAME LOGIC*/
+// If cards are no equals then hide cards.
+function hideCard () {
  	for (var i = 0; i < 2; i++){
  		$(compareCard[i][0]).attr('class', 'card');
  		// $(compareCard[i][0]).toggleClass('show');
  	}
  	compareCard = [];
  }
-// If cards are equals remove on.click event and fix cards
+// If cards are equals remove on.click event and disallow on.click functionality.
 function cardsMatch () {
 	for (var i = 0; i < 2; i++){
 		$(compareCard[i][0]).off('click');
@@ -144,10 +154,8 @@ function cardsMatch () {
 	}
 	compareCard = [];
 }
-
- // Set on.click event for cards.
- function	cardOnClick() {
-
+// Set on.click event for cards.
+function	cardOnClick() {
 	 // $('.card').on('click', function (e){
 	 $('.card').on('click', function (e){
 		 // toggle to open
@@ -182,20 +190,22 @@ function cardsMatch () {
 		 } // end if-else
 
 	 } //end if (cmapareCard.length == 2)
-
+	 totalMoves();
 })
 } // end cardOnClick()
+/* END GAME LOGIC */
 
+/* END FUNCTIONS */
 
- /* LAUNCH APP.JS
- */
- $(function (){
-	 /* Launch event handlers */
-	 // card.on.click
-	 cardOnClick();
-	 // Shuffle Cards at the very beginning
-	 shuffle(cardOptions);
-	 // Launch a starting game
-	 newGame();
-	 $('li.card').attr('class', 'card');
- });
+/* LAUNCH APP.JS */
+$(function (){
+	/* Launch event handlers */
+	// card.on.click
+	cardOnClick();
+	// Shuffle Cards at the very beginning
+	shuffle(cardOptions);
+	// Launch a starting game
+	newGame();
+	$('li.card').attr('class', 'card');
+});
+/* LAUNCH: DOMENT.ONLOAD(render JS) */
