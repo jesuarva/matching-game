@@ -1,7 +1,7 @@
  /*
  * Create a list that holds all of your cards
  */
-var numberOfGames = 0;
+var gamesPlayed = 0;
 var dashboardPositions = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 var cardOptions = ["fa-address-book-o",
 			 "fa-address-card",
@@ -28,7 +28,7 @@ var cardOptions = ["fa-address-book-o",
 			 "fa-podcast",
 			 "fa-quora",
 			 "fa-ravelry",
-			 "fa-s15",
+			 "fa-reddit-alien",
 			 "fa-shower",
 			 "fa-snowflake-o",
 			 "fa-superpowers",
@@ -54,8 +54,8 @@ var cardOptions = ["fa-address-book-o",
 /* At game start:
  *	1 - Shufle cardOptions array.
  * 	2 - Shuffle dashboardPositions array.
- *	3 - Assign the (4 * numberOfGames) first cards from cardOptions array to $('li.card i.fa') elements.
- *		3.1 Increase numberOfGames by 1
+ *	3 - Assign the (4 * gamesPlayed) first cards from cardOptions array to $('li.card i.fa') elements.
+ *		3.1 Increase gamesPlayed by 1
  */
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -72,19 +72,21 @@ function shuffle(array) {
     return array;
 }
 
-// 3 - Assign the (8 * numberOfGames) first cards from cardOptions array to $('li.card i.fa') elements.
-// 	3.1 Increase numberOfGames by 1
+// 3 - Assign the (8 * gamesPlayed) first cards from cardOptions array to $('li.card i.fa') elements.
+// 	3.1 Increase gamesPlayed by 1
 function setDashboardCards () {
 	var htmlCards = $('li.card');
 	var htmlCardsIndex = 0;
+
 	console.log('dashboardPositions.length: '+dashboardPositions.length);
 	console.log('dashboardPositions: '+dashboardPositions);
+	var j = 0;
 	for (var i = 0; i < dashboardPositions.length; i += 2) {
-		/* THIS DOSN'T WORK
+		/* THIS DIDN'T WORK
 		console.log(dashboardPositions[i]);
 		console.log(dashboardPositions[i+1]);
-		console.log('cardOptions[i+numberOfGames]: '+cardOptions[i+numberOfGames]);
-		var innerHtml = '<i class="fa '+cardOptions[i+numberOfGames]+'></i>';
+		console.log('cardOptions[i+gamesPlayed]: '+cardOptions[i+gamesPlayed]);
+		var innerHtml = '<i class="fa '+cardOptions[i+gamesPlayed]+'></i>';
 		console.log('innerHtml: '+innerHtml);
 		console.log($('li.card').eq(dashboardPositions[i]).html("<p>Hola Caracola</p>"));
 		console.log($('li.card').eq(dashboardPositions[i]).html());
@@ -95,36 +97,23 @@ function setDashboardCards () {
 		$('li.card').eq(dashboardPositions[i+1]).html(innerHtml);
 		*/
 
-		var cardOptionosi = '<i class="fa '+cardOptions[i+numberOfGames]+'></i>';
+		var cardOptionosi = '<i class="fa '+cardOptions[i+gamesPlayed]+'></i>';
 		console.log('innerHtml: '+cardOptionosi);
 		console.log($('li.card li.fa').eq(dashboardPositions[i]).attr('class'));
-		$('li.card i.fa').eq(dashboardPositions[i]).attr('class', 'fa '+cardOptions[i]);
-		$('li.card i.fa').eq(dashboardPositions[i+1]).attr('class', 'fa '+cardOptions[i]);
-
-
+		$('li.card i.fa').eq(dashboardPositions[i]).attr('class', 'fa '+cardOptions[j+gamesPlayed]);
+		$('li.card i.fa').eq(dashboardPositions[i+1]).attr('class', 'fa '+cardOptions[j+gamesPlayed]);
+		j++;
 	}
 
-
-	// for (var cardNumber = 0; cardNumber<8; cardNumber++) {
-	// 	for (var assignTwice = 0; assignTwice<2; assignTwice++) {
-	// 		$(htmlCards).eq(dashboardPositions[positionHtmlCards]).html('<i class="fa '+cardOptions[cardNumber]+'></i>');
-	// 		console.log($(htmlCards).eq(positionHtmlCards).html());
-	// 		positionHtmlCards++;
-	// 	}
-	// }
-	numberOfGames++;
+	gamesPlayed++;
 }
 
+// FUNCTION newgGame
+function newGame () {
 
-$(function (){
-	// console.log('cardOptions: '+cardOptions);
-	// console.log('dashboardPositions: '+dashboardPositions)
-	// 1 - Shufle cardOptions array.
-	shuffle(cardOptions);
-	shuffle(dashboardPositions);
+	// shuffle(dashboardPositions);
 	setDashboardCards();
-});
-
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -136,3 +125,16 @@ $(function (){
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
+
+
+ /* LAUNCH APP.JS
+ */
+ $(function (){
+ 	// Shuffle Cards at the very beginning
+ 	shuffle(cardOptions);
+ 	// Launch a starting game
+ 	newGame();
+ 	$('li.card').attr('class', 'card open show');
+ });
