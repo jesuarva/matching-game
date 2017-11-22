@@ -47,6 +47,7 @@ var cardOptions = ["fa-address-book-o",
 									 "fa-plug"
 								 ];
 var moves = 0;
+var timer, seconds = 0, minutes;
 /* END VARIABLES */
 
 /*
@@ -114,16 +115,46 @@ function setDashboardCards () {
 	gamesPlayed++;
 }
 // Hide all cards
-function hideCards (){}
+function hideAllCards (){}
 // totalMoves count
 function totalMoves () {
 	moves++;
 	$('.moves').text(moves);
 }
+/*** Cunt seconds and minutes ***/
+// Start Timer
+var countSecondsAndMinutes = function () {
+	console.log('countSeconds on');
+	seconds++;
+	minutes = Math.floor(seconds/60);
+}
+var printElapsedTime = function () {
+	console.log('printElapsedTime on');
+	var secUnits = seconds%10;
+	var secTen = Math.floor((seconds%60)/10);
+	var minUnits = minutes%10;
+	console.log(minutes);
+	var minTen = Math.floor((minutes%60)/10);
+
+	$('.secondsUnits').text(secUnits);
+	$('.secondsTen').text(secTen);
+	$('.minutesUnits').text(minUnits);
+	$('.minutesTen').text(minTen);
+}
+// startTimer has a setInterval=(function, 1000)
+var startTimer = function(){
+	console.log('startTimer on');
+	timer = setInterval( function (){
+		countSecondsAndMinutes();
+		printElapsedTime();
+	}, 1000);
+}
+/* End Cunt seconds and minutes */
 // newGame
 function newGame () {
 	shuffle(dashboardPositions);
 	setDashboardCards();
+	startTimer();
 }
 
 /*
@@ -187,9 +218,8 @@ function	cardOnClick() {
 				 console.log(compareCard);
 				 // toggle to open and DELAY this action.
 				 setTimeout(hideCard,300);
-		 } // end if-else
-
-	 } //end if (cmapareCard.length == 2)
+			 } // end if-else
+		 } //end if (cmapareCard.length == 2)
 	 totalMoves();
 })
 } // end cardOnClick()

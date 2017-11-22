@@ -107,3 +107,8 @@ h1 {
     float: right;
     cursor: pointer;
 }
+/* Style for timer panel */
+.elpasedTime .time {
+  min-width: 15px;
+  align-items: center;
+}
