@@ -121,19 +121,19 @@ function totalMoves () {
 	moves++;
 	$('.moves').text(moves);
 }
-/*** Cunt seconds and minutes ***/
+/*** TIMER:Cunt seconds and minutes ***/
 // Start Timer
 var countSecondsAndMinutes = function () {
-	console.log('countSeconds on');
+	// console.log('countSeconds on');
 	seconds++;
 	minutes = Math.floor(seconds/60);
 }
 var printElapsedTime = function () {
-	console.log('printElapsedTime on');
+	// console.log('printElapsedTime on');
 	var secUnits = seconds%10;
 	var secTen = Math.floor((seconds%60)/10);
 	var minUnits = minutes%10;
-	console.log(minutes);
+	// console.log(minutes);
 	var minTen = Math.floor((minutes%60)/10);
 
 	$('.secondsUnits').text(secUnits);
@@ -149,7 +149,7 @@ var startTimer = function(){
 		printElapsedTime();
 	}, 1000);
 }
-/* End Cunt seconds and minutes */
+/* End TIMER: Count seconds and minutes */
 // newGame
 function newGame () {
 	shuffle(dashboardPositions);
@@ -173,6 +173,7 @@ function newGame () {
 function hideCard () {
  	for (var i = 0; i < 2; i++){
  		$(compareCard[i][0]).attr('class', 'card');
+		$(compareCard[i][0]).on('click', actionOnClic);
  		// $(compareCard[i][0]).toggleClass('show');
  	}
  	compareCard = [];
@@ -186,42 +187,45 @@ function cardsMatch () {
 	compareCard = [];
 }
 // Set on.click event for cards.
+var actionOnClic = function(){
+	// toggle to open
+	$(this).toggleClass('open');
+	// toggle to visible
+	$(this).toggleClass('show');
+	$(this).off('click');
+
+	// ADD clicked card to comparedCard array
+	// [element.clicked, element.html()]
+	compareCard.push([$(this),$(this).html()]);
+
+	// Logic whne 2 cards have been cliked.
+	if( compareCard.length == 2 ){
+		/* DIDN'T WORK
+			// // toggle to open
+			// $(this).toggleClass('open');
+			// // toggle to visible
+			// $(this).toggleClass('show');
+		*/
+		console.log(compareCard[1][1]);
+		console.log(compareCard[0][1]);
+		console.log(compareCard[0][1] === compareCard[1][1]);
+		if ( compareCard[0][1] === compareCard[1][1] ) {
+			console.log("Cartas son iguales");
+			console.log(compareCard);
+			cardsMatch();
+		} else {
+			console.log("cartas no son iguales");
+			console.log(compareCard);
+			// toggle to open and DELAY this action.
+			setTimeout(hideCard,300);
+		} // end if-else
+	} //end if (cmapareCard.length == 2)
+totalMoves();
+}
+/*********************************/
 function	cardOnClick() {
 	 // $('.card').on('click', function (e){
-	 $('.card').on('click', function (e){
-		 // toggle to open
-		 $(this).toggleClass('open');
-		 // toggle to visible
-		 $(this).toggleClass('show');
-
-		 // ADD clicked card to comparedCard array
-		 // [element.clicked, element.html()]
-		 compareCard.push([$(this),$(this).html()]);
-
-		 // Logic whne 2 cards have been cliked.
-		 if( compareCard.length == 2 ){
-			 /* DIDN'T WORK
-				 // // toggle to open
-				 // $(this).toggleClass('open');
-				 // // toggle to visible
-				 // $(this).toggleClass('show');
-			 */
-			 console.log(compareCard[1][1]);
-			 console.log(compareCard[0][1]);
-			 console.log(compareCard[0][1] === compareCard[1][1]);
-			 if ( compareCard[0][1] === compareCard[1][1] ) {
-				 console.log("Cartas son iguales");
-				 console.log(compareCard);
-				 cardsMatch();
-			 } else {
-				 console.log("cartas no son iguales");
-				 console.log(compareCard);
-				 // toggle to open and DELAY this action.
-				 setTimeout(hideCard,300);
-			 } // end if-else
-		 } //end if (cmapareCard.length == 2)
-	 totalMoves();
-})
+	 $('.card').on('click', actionOnClic)
 } // end cardOnClick()
 /* END GAME LOGIC */
 
