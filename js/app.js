@@ -232,7 +232,15 @@ var youWinYouLose = function(){
 		$('#result-pane').toggleClass('noVisible');
 		$('.youWin').toggleClass('noVisible');
 	} else {
-
+		switch (stars) {
+			case 0:
+				clearInterval(timer);
+				$('.card').off('click');
+				$('.deck').fadeTo('slow', '0.5');
+				$('#result-pane').toggleClass('noVisible');
+				$('.youLose').toggleClass('noVisible');
+				break;
+		}
 	}
 }
 // If cards are equals remove on.click event and disallow on.click functionality.
@@ -260,6 +268,7 @@ var actionOnClic = function(){
 	// [element.clicked, element.html()]
 	compareCard.push([$(this),$(this).html()]);
 
+	totalMoves();
 	// Logic whne 2 cards have been cliked.
 	if( compareCard.length == 2 ){
 		/* DIDN'T WORK
@@ -276,13 +285,20 @@ var actionOnClic = function(){
 			console.log(compareCard);
 			cardsMatch();
 		} else {
-			console.log("cartas no son iguales");
-			console.log(compareCard);
-			// toggle to open and DELAY this action.
-			setTimeout(hideCard,300);
+			switch (stars) {
+				case 0:
+					youWinYouLose();
+					break;
+				default:
+				console.log("cartas no son iguales");
+				console.log(compareCard);
+				// toggle to open and DELAY this action.
+				setTimeout(hideCard,300);
+			}
+
 		} // end if-else
 	} //end if (cmapareCard.length == 2)
-	totalMoves();
+
 }
 function	cardOnClick() {
 	 // $('.card').on('click', function (e){
