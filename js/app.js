@@ -127,6 +127,7 @@ function totalMoves () {
 	moves++;
 	$('.moves').text(moves);
 }
+
 /*** TIMER:Cunt seconds and minutes ***/
 // Start Timer
 var countSecondsAndMinutes = function () {
@@ -161,6 +162,7 @@ var startTimer = function(){
 }
 /* End TIMER: Count seconds and minutes */
 // newGame
+
 function newGame () {
 	clearInterval(timer);
 	shuffle(dashboardPositions);
@@ -173,12 +175,15 @@ function newGame () {
 }
 // Restart game
 var restartGame = function () {
-	$('#result-pane').toggleClass('noVisible');
+	$('.card').off('click');
+	$('#result-pane').attr('class', 'container noVisible')
 	$('li.card').attr('class', 'card match');
 	$('.deck').fadeTo('slow', '1');
 	newGame();
 	setTimeout(function(){ $('li.card').attr('class', 'card');}, 450);
+	console.log(matchedCards);
 }
+
 // If cards are no equals then hide cards.
 function hideCard () {
  	for (var i = 0; i < 2; i++){

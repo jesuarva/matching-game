@@ -108,6 +108,9 @@ h1 {
     float: right;
     cursor: pointer;
 }
+* .hidden {
+  visibility: hidden;
+}
 /* Style for timer panel */
 .elpasedTime .time {
   min-width: 15px;
