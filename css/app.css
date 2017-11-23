@@ -112,6 +112,9 @@ h1 {
   visibility: hidden;
 }
 /* Style for timer panel */
+.timer-win-lose {
+  margin: auto;
+}
 .elpasedTime .time {
   min-width: 15px;
   align-items: center;
@@ -123,7 +126,7 @@ h1 {
 }
 
 .resul-deck {
-  width: 400spx;
+  width: 400px;
   min-height: auto;
   background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
   padding: 32px;
@@ -142,7 +145,8 @@ h1 {
 }
 .message-win-lose {
   display: block;
-  /*width: 390px;*/
+  text-align: center;
+  width: 390px;
 }
 /*.win-or-lose .score-panel {
   text-align: left;

@@ -199,6 +199,8 @@ function newGame () {
 	startTimer();
 	matchedCards = 0;
 	moves = 0;
+	stars = 3;
+	compareCard = [];
 	$('.moves').text(moves);
 	cardOnClick();
 }
@@ -231,17 +233,14 @@ var youWinYouLose = function(){
 		$('.deck').fadeTo('slow', '0.5');
 		$('#result-pane').toggleClass('noVisible');
 		$('.youWin').toggleClass('noVisible');
-	} else {
-		switch (stars) {
-			case 0:
-				clearInterval(timer);
-				$('.card').off('click');
-				$('.deck').fadeTo('slow', '0.5');
-				$('#result-pane').toggleClass('noVisible');
-				$('.youLose').toggleClass('noVisible');
-				break;
-		}
 	}
+}
+var youLose = function(){
+			clearInterval(timer);
+			$('.card').off('click');
+			$('.deck').fadeTo('slow', '0.5');
+			$('#result-pane').toggleClass('noVisible');
+			$('.youLose').toggleClass('noVisible');
 }
 // If cards are equals remove on.click event and disallow on.click functionality.
 function cardsMatch () {
@@ -269,7 +268,7 @@ var actionOnClic = function(){
 	compareCard.push([$(this),$(this).html()]);
 
 	totalMoves();
-	// Logic whne 2 cards have been cliked.
+	// Logic when 2 cards have been cliked.
 	if( compareCard.length == 2 ){
 		/* DIDN'T WORK
 			// // toggle to open
@@ -279,26 +278,21 @@ var actionOnClic = function(){
 		*/
 		console.log(compareCard[1][1]);
 		console.log(compareCard[0][1]);
-		console.log(compareCard[0][1] === compareCard[1][1]);
+		console.log("cartas son iguales? "+ (compareCard[0][1] === compareCard[1][1]));
 		if ( compareCard[0][1] === compareCard[1][1] ) {
 			console.log("Cartas son iguales");
 			console.log(compareCard);
 			cardsMatch();
+		} else if (stars===0){
+					youLose();
 		} else {
-			switch (stars) {
-				case 0:
-					youWinYouLose();
-					break;
-				default:
-				console.log("cartas no son iguales");
-				console.log(compareCard);
-				// toggle to open and DELAY this action.
-				setTimeout(hideCard,300);
-			}
-
+			console.log("cartas no son iguales");
+			console.log(compareCard);
+			// toggle to open and DELAY this action.
+			setTimeout(hideCard,300);
 		} // end if-else
-	} //end if (cmapareCard.length == 2)
 
+	} //end if (cmapareCard.length == 2)
 }
 function	cardOnClick() {
 	 // $('.card').on('click', function (e){
