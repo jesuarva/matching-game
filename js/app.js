@@ -51,6 +51,7 @@ var gameLevel = 8; // TODO Add game levels. posible values { small: 8; medium: 1
 var timer,
 		seconds = 0,
 		minutes;
+var stars = 3, attemp = [24,34,40];
 /* END VARIABLES */
 
 /*
@@ -122,11 +123,39 @@ function setDashboardCards () {
 }
 // Hide all cards
 function hideAllCards (){}
+
+/** Deling with 'starts' logic **/
+/* 1-attemp is 2-moves
+ * at 12 attemps (24-moves) - lose first start
+ * at 17 attemps (34-moves) - lose second start
+ * at 20 attemps (40-moves) - lose second start
+*/
 // totalMoves count
 function totalMoves () {
 	moves++;
 	$('.moves').text(moves);
+	console.log(attemp.indexOf(moves)>-1);
+	if (attemp.indexOf(moves)>=0){
+		switch (stars) {
+			case 1:
+				console.log('case 1');
+				stars -= 1;
+				$('.score-panel li.star1').attr('class', 'star1 hidden');
+				break;
+			case 2:
+				console.log('case 2');
+				stars -= 1;
+				$('.score-panel li.star2').attr('class', 'star2 hidden');
+				break;
+			case 3:
+				console.log('case 3');
+				stars -= 1;
+				$('.score-panel li.star3').attr('class', 'star3 hidden');
+				break;
+		}
+	}
 }
+/** END Deling with 'starts' logic **/
 
 /*** TIMER:Cunt seconds and minutes ***/
 // Start Timer
