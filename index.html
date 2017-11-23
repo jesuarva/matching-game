@@ -34,6 +34,8 @@
         	</div>
         </section>
 
+
+
         <ul class="deck">
             <li class="card open show">
                 <i class="fa fa-paper-plane"></i>
@@ -87,13 +89,38 @@
 
         <section class="timer">
           <span class="elpasedTime">
-            <span class="time minutesTen">0</span><span class="time minutesUnits">0</span>
+            <span class="time minutesTen"></span><span class="time minutesUnits"></span>
             <span class="time">:</span>
-            <span class="time secondsTen">0</span><span class="time secondsUnits">0</span> </span>
+            <span class="time secondsTen"></span><span class="time secondsUnits"></span> </span>
         </section>
 
     </div>
 
+    <!-- WIN OR LOSE ALERT -->
+    <div id="result-pane" class="container noVisible">
+      <div  class="resul-deck">
 
+        <section class="message-win-lose">
+          <h1 class="noVisible youWin">Fantastic! you win.</h1>
+          <h1 class="noVisible youLose">Ohhh! try again.</h1>
+        </section>
+        <section class="score-panel">
+            <ul class="stars">
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+              <li><i class="fa fa-star"></i></li>
+            </ul>
+
+            <span class="moves"></span> Moves
+            <br>
+
+              <div class="restart">
+                <span>one more time?   </span>
+              <i class="fa fa-repeat"></i>
+            </div>
+        </section>
+      </div>
+    </div>
+    <!-- END WIN OR LOSE ALERT -->
 </body>
 </html>

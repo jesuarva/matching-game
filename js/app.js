@@ -47,7 +47,10 @@ var cardOptions = ["fa-address-book-o",
 									 "fa-plug"
 								 ];
 var moves = 0;
-var timer, seconds = 0, minutes;
+var gameLevel = 8; // TODO Add game levels. posible values { small: 8; medium: 12; large: 16 }
+var timer,
+		seconds = 0,
+		minutes;
 /* END VARIABLES */
 
 /*
@@ -63,7 +66,10 @@ var timer, seconds = 0, minutes;
  *		3.1 Increase gamesPlayed by 1
  */
 
+ /*GAME LOGIC*/
+
 /* FUNCTIONS */
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -144,6 +150,10 @@ var printElapsedTime = function () {
 // startTimer has a setInterval=(function, 1000)
 var startTimer = function(){
 	console.log('startTimer on');
+	$('.secondsUnits').text('0');
+	$('.secondsTen').text('0');
+	$('.minutesUnits').text('0');
+	$('.minutesTen').text('0');
 	timer = setInterval( function (){
 		countSecondsAndMinutes();
 		printElapsedTime();
@@ -152,23 +162,23 @@ var startTimer = function(){
 /* End TIMER: Count seconds and minutes */
 // newGame
 function newGame () {
+	clearInterval(timer);
 	shuffle(dashboardPositions);
 	setDashboardCards();
 	startTimer();
+	matchedCards = 0;
+	moves = 0;
+	$('.moves').text(moves);
+	cardOnClick();
 }
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
-/*GAME LOGIC*/
+// Restart game
+var restartGame = function () {
+	$('#result-pane').toggleClass('noVisible');
+	$('li.card').attr('class', 'card match');
+	$('.deck').fadeTo('slow', '1');
+	newGame();
+	setTimeout(function(){ $('li.card').attr('class', 'card');}, 450);
+}
 // If cards are no equals then hide cards.
 function hideCard () {
  	for (var i = 0; i < 2; i++){
@@ -178,13 +188,31 @@ function hideCard () {
  	}
  	compareCard = [];
  }
+// Game is finished?
+//               var win = function () { if(matchedCards === gameLevel){return true;} else { return false;} };
+var youWinYouLose = function(){
+	if ( matchedCards === gameLevel ){
+		clearInterval(timer);
+		$('.card').off('click');
+		$('.deck').fadeTo('slow', '0.5');
+		$('#result-pane').toggleClass('noVisible');
+		$('.youWin').toggleClass('noVisible');
+	} else {
+
+	}
+}
 // If cards are equals remove on.click event and disallow on.click functionality.
 function cardsMatch () {
 	for (var i = 0; i < 2; i++){
 		$(compareCard[i][0]).off('click');
-
+		$(compareCard[i][0]).toggleClass('match');
+		$(compareCard[i][0]).toggleClass('open');
+		$(compareCard[i][0]).toggleClass('show');
 	}
 	compareCard = [];
+	matchedCards++;
+	console.log(matchedCards);
+	youWinYouLose();
 }
 // Set on.click event for cards.
 var actionOnClic = function(){
@@ -220,22 +248,22 @@ var actionOnClic = function(){
 			setTimeout(hideCard,300);
 		} // end if-else
 	} //end if (cmapareCard.length == 2)
-totalMoves();
+	totalMoves();
 }
-/*********************************/
 function	cardOnClick() {
 	 // $('.card').on('click', function (e){
-	 $('.card').on('click', actionOnClic)
+	 $('.card').on('click', actionOnClic);
 } // end cardOnClick()
-/* END GAME LOGIC */
 
 /* END FUNCTIONS */
+/* END GAME LOGIC */
 
 /* LAUNCH APP.JS */
 $(function (){
 	/* Launch event handlers */
 	// card.on.click
-	cardOnClick();
+	// cardOnClick();
+	$('.restart').on('click', restartGame);
 	// Shuffle Cards at the very beginning
 	shuffle(cardOptions);
 	// Launch a starting game
