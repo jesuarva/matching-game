@@ -18,3 +18,16 @@ The number of moves needed to change the rating is up to you, but it should happ
 
 ## DONE 6 - Move Counter
 # Game displays the current number of moves a user has made.
+
+------------------------------------
+**REVIEW**
+*TODO*
+* Game logic
+* PopUp message logic
+* TIMER: starts when player clicks on the first cards
+* Star rating : to be displayed at all times
+* THIS WAS OK * Click counter : only at fliping a card
+* DONE * RESPONSIVE
+* README : According to https://www.udacity.com/course/writing-readmes--ud777
+* CODE COMMENTS: more detailed comments
+* DONE * Move Scripts to bottom of html body

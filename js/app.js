@@ -1,10 +1,10 @@
- /* VARIABLES */
+/* VARIABLES */
 var gamesPlayed = 0;
-var dashboardPositions = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+var dashboardPositions = [0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 var compareCard = [];
 var matchedCards = 0;
 // Multiple icons to allow few repetitions in nwew games.
-// TODO: when improving the game so user can select a level, this multiple icons help in that matter.
+// TODO when improving the game so user can select a level, this multiple icons help in that matter.
 var cardOptions = ["fa-address-book-o",
 									 "fa-address-card",
 									 "fa-address-card-o",
@@ -67,7 +67,7 @@ var stars = 3, attemp = [24,34,40];
  *		3.1 Increase gamesPlayed by 1
  */
 
- /*GAME LOGIC*/
+/*GAME LOGIC*/
 
 /* FUNCTIONS */
 
@@ -96,24 +96,6 @@ function setDashboardCards () {
 	console.log('dashboardPositions: '+dashboardPositions);
 	var j = 0;
 	for (var i = 0; i < dashboardPositions.length; i += 2) {
-		/* THIS DIDN'T WORK
-		console.log(dashboardPositions[i]);
-		console.log(dashboardPositions[i+1]);
-		console.log('cardOptions[i+gamesPlayed]: '+cardOptions[i+gamesPlayed]);
-		var innerHtml = '<i class="fa '+cardOptions[i+gamesPlayed]+'></i>';
-		console.log('innerHtml: '+innerHtml);
-		console.log($('li.card').eq(dashboardPositions[i]).html("<p>Hola Caracola</p>"));
-		console.log($('li.card').eq(dashboardPositions[i]).html());
-		console.log($('li.card').eq(dashboardPositions[i+1]).html(innerHtml));
-		console.log($('li.card').eq(dashboardPositions[i+1]).html());
-
-		$('li.card').eq(dashboardPositions[i]).html(innerHtml);
-		$('li.card').eq(dashboardPositions[i+1]).html(innerHtml);
-		*/
-
-		// var cardOptionosi = '<i class="fa '+cardOptions[i+gamesPlayed]+'></i>';
-		// console.log('innerHtml: '+cardOptionosi);
-		// console.log($('li.card li.fa').eq(dashboardPositions[i]).attr('class'));
 		$('li.card i.fa').eq(dashboardPositions[i]).attr('class', 'fa '+cardOptions[j+gamesPlayed]);
 		$('li.card i.fa').eq(dashboardPositions[i+1]).attr('class', 'fa '+cardOptions[j+gamesPlayed]);
 		j++;
@@ -163,7 +145,7 @@ var countSecondsAndMinutes = function () {
 	// console.log('countSeconds on');
 	seconds++;
 	minutes = Math.floor(seconds/60);
-}
+};
 var printElapsedTime = function () {
 	// console.log('printElapsedTime on');
 	var secUnits = seconds%10;
@@ -176,7 +158,7 @@ var printElapsedTime = function () {
 	$('.secondsTen').text(secTen);
 	$('.minutesUnits').text(minUnits);
 	$('.minutesTen').text(minTen);
-}
+};
 // startTimer has a setInterval=(function, 1000)
 var startTimer = function(){
 	console.log('startTimer on');
@@ -188,7 +170,7 @@ var startTimer = function(){
 		countSecondsAndMinutes();
 		printElapsedTime();
 	}, 1000);
-}
+};
 /* End TIMER: Count seconds and minutes */
 // newGame
 
@@ -213,7 +195,7 @@ var restartGame = function () {
 	newGame();
 	setTimeout(function(){ $('li.card').attr('class', 'card');}, 450);
 	console.log(matchedCards);
-}
+};
 
 // If cards are no equals then hide cards.
 function hideCard () {
@@ -225,7 +207,7 @@ function hideCard () {
  	compareCard = [];
  }
 // Game is finished?
-//               var win = function () { if(matchedCards === gameLevel){return true;} else { return false;} };
+// var win = function () { if(matchedCards === gameLevel){return true;} else { return false;} };
 var youWinYouLose = function(){
 	if ( matchedCards === gameLevel ){
 		clearInterval(timer);
@@ -234,14 +216,14 @@ var youWinYouLose = function(){
 		$('#result-pane').toggleClass('noVisible');
 		$('.youWin').toggleClass('noVisible');
 	}
-}
+};
 var youLose = function(){
 			clearInterval(timer);
 			$('.card').off('click');
 			$('.deck').fadeTo('slow', '0.5');
 			$('#result-pane').toggleClass('noVisible');
 			$('.youLose').toggleClass('noVisible');
-}
+};
 // If cards are equals remove on.click event and disallow on.click functionality.
 function cardsMatch () {
 	for (var i = 0; i < 2; i++){
@@ -314,4 +296,3 @@ $(function (){
 	newGame();
 	$('li.card').attr('class', 'card');
 });
-/* LAUNCH: DOMENT.ONLOAD(render JS) */
