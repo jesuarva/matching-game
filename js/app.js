@@ -2,7 +2,7 @@
 var gamesPlayed = 0;
 var dashboardPositions = [0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 var compareCard = [];
-var matchedCards = 0;
+var matchedCards = 7;
 // Multiple icons to allow few repetitions in nwew games.
 // TODO when improving the game so user can select a level, this multiple icons help in that matter.
 var cardOptions = ["fa-address-book-o",
@@ -46,7 +46,7 @@ var cardOptions = ["fa-address-book-o",
 									 "fa-user-circle-o",
 									 "fa-plug"
 								 ];
-var moves = 0;
+var moves = 30;
 var gameLevel = 8; // TODO Add game levels. posible values { small: 8; medium: 12; large: 16 }
 var timer,
 		seconds = 0,
@@ -119,7 +119,7 @@ function totalMoves () {
 	// print total moves to page
 	$('.moves').text(moves);
 	// check if moves reach one of the threshold values
-	console.log( attemp.indexOf(moves)>-1 );
+	console.log('Decrease star ='+ attemp.indexOf(moves)>-1 );
 	if (attemp.indexOf(moves)>=0){
 		switch (stars) {
 			case 1:
@@ -206,7 +206,7 @@ var restartGame = function () {
 	$('.deck').fadeTo('slow', '1');
 	newGame();
 	setTimeout(function(){ $('li.card').attr('class', 'card');}, 450);
-	console.log(matchedCards);
+	console.log('matchedCards = '+matchedCards);
 };
 
 // Set starting values for a new game to variables
@@ -235,7 +235,8 @@ var youWinYouLose = function(){
 		$('.card').off('click');
 		$('.deck').fadeTo('slow', '0.5');
 		$('#result-pane').toggleClass('noVisible');
-		$('.youWin').toggleClass('noVisible');
+		// $('.youWin').toggleClass('noVisible');
+		$('.message-win-lose').html('Fantastic! you win.');
 	}
 };
 var youLose = function(){
@@ -243,7 +244,8 @@ var youLose = function(){
 			$('.card').off('click');
 			$('.deck').fadeTo('slow', '0.5');
 			$('#result-pane').toggleClass('noVisible');
-			$('.youLose').toggleClass('noVisible');
+			// $('.youLose').toggleClass('noVisible');
+			$('.message-win-lose').html('No luck! try again.');
 };
 // If cards are equals remove on.click event and disallow on.click functionality.
 function cardsMatch () {
@@ -255,7 +257,7 @@ function cardsMatch () {
 	}
 	compareCard = [];
 	matchedCards++;
-	console.log(matchedCards);
+	console.log('matchedCards ='+matchedCards);
 	youWinYouLose();
 }
 // Set on.click event for cards.
@@ -271,6 +273,7 @@ var actionOnClic = function(){
 	compareCard.push([$(this),$(this).html()]);
 
 	totalMoves();
+	console.log('moves ='+moves);
 	// Logic when 2 cards have been cliked.
 	if( compareCard.length == 2 ){
 		/* DIDN'T WORK
