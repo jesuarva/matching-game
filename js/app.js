@@ -2,7 +2,7 @@
 var gamesPlayed = 0;
 var dashboardPositions = [0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
 var compareCard = [];
-var matchedCards = 7;
+var matchedCards = 0;
 // Multiple icons to allow few repetitions in nwew games.
 // TODO when improving the game so user can select a level, this multiple icons help in that matter.
 var cardOptions = ["fa-address-book-o",
@@ -46,7 +46,7 @@ var cardOptions = ["fa-address-book-o",
 									 "fa-user-circle-o",
 									 "fa-plug"
 								 ];
-var moves = 30;
+var moves = 0;
 var gameLevel = 8; // TODO Add game levels. posible values { small: 8; medium: 12; large: 16 }
 var timer,
 		seconds = 0,
@@ -117,7 +117,9 @@ function totalMoves () {
 	// increase moves counter
 	moves++;
 	// print total moves to page
-	$('.moves').text(moves);
+	if (moves%2 === 0) {
+		$('.moves').text(moves/2);
+	}
 	// check if moves reach one of the threshold values
 	console.log('Decrease star ='+ attemp.indexOf(moves)>-1 );
 	if (attemp.indexOf(moves)>=0){
