@@ -209,6 +209,7 @@ var setStartingValues = function (){
 	moves = 0;
 	resetStars();
 	compareCard = [];
+	seconds = 0;
 
 };
 // If cards are no equals then hide cards.
