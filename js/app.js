@@ -110,33 +110,42 @@ function hideAllCards (){}
 /* 1-attemp is 2-moves
  * at 12 attemps (24-moves) - lose first start
  * at 17 attemps (34-moves) - lose second start
- * at 20 attemps (40-moves) - lose second start
+ * at 20 attemps (40-moves) - lose third start
 */
 // totalMoves count
 function totalMoves () {
+	// increase moves counter
 	moves++;
+	// print total moves to page
 	$('.moves').text(moves);
-	console.log(attemp.indexOf(moves)>-1);
+	// check if moves reach one of the threshold values
+	console.log( attemp.indexOf(moves)>-1 );
 	if (attemp.indexOf(moves)>=0){
 		switch (stars) {
 			case 1:
-				console.log('case 1');
+				console.log('Decreasing from 1 to 0 stars');
 				stars -= 1;
 				$('.score-panel li.star1').attr('class', 'star1 hidden');
 				break;
 			case 2:
-				console.log('case 2');
+				console.log('Decreasing from 2 to 1 stars');
 				stars -= 1;
 				$('.score-panel li.star2').attr('class', 'star2 hidden');
 				break;
 			case 3:
-				console.log('case 3');
+				console.log('Decreasing from 3 to 2 stars');
 				stars -= 1;
 				$('.score-panel li.star3').attr('class', 'star3 hidden');
 				break;
 		}
 	}
 }
+var resetStars = function (){
+	stars = 3;
+	for (var i = 1; i <= 3; ++i){
+			$('.score-panel li.star'+i).attr('class', 'star'+i);
+	}
+};
 /** END Deling with 'starts' logic **/
 
 /*** TIMER:Cunt seconds and minutes ***/
@@ -172,17 +181,14 @@ var startTimer = function(){
 	}, 1000);
 };
 /* End TIMER: Count seconds and minutes */
-// newGame
 
+// newGame
 function newGame () {
 	clearInterval(timer);
 	shuffle(dashboardPositions);
 	setDashboardCards();
 	startTimer();
-	matchedCards = 0;
-	moves = 0;
-	stars = 3;
-	compareCard = [];
+	setStartingValues();
 	$('.moves').text(moves);
 	cardOnClick();
 }
@@ -197,6 +203,14 @@ var restartGame = function () {
 	console.log(matchedCards);
 };
 
+// Set starting values for a new game to variables
+var setStartingValues = function (){
+	matchedCards = 0;
+	moves = 0;
+	resetStars();
+	compareCard = [];
+
+};
 // If cards are no equals then hide cards.
 function hideCard () {
  	for (var i = 0; i < 2; i++){
@@ -275,7 +289,7 @@ var actionOnClic = function(){
 		} // end if-else
 
 	} //end if (cmapareCard.length == 2)
-}
+};
 function	cardOnClick() {
 	 // $('.card').on('click', function (e){
 	 $('.card').on('click', actionOnClic);
