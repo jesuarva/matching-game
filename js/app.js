@@ -182,6 +182,12 @@ var startTimer = function(){
 };
 /* End TIMER: Count seconds and minutes */
 
+
+// START GAME
+var startGame = function () {
+	$('.card').off('click');
+	newGame();
+};
 // newGame
 function newGame () {
 	clearInterval(timer);
@@ -289,12 +295,13 @@ var actionOnClic = function(){
 			setTimeout(hideCard,300);
 		} // end if-else
 
-	} //end if (cmapareCard.length == 2)
+	} //end if (compareCard.length == 2)
 };
 function	cardOnClick() {
-	 // $('.card').on('click', function (e){
+	 // $('.card').on('click', function (e){})
 	 $('.card').on('click', actionOnClic);
 } // end cardOnClick()
+
 
 /* END FUNCTIONS */
 /* END GAME LOGIC */
@@ -308,6 +315,6 @@ $(function (){
 	// Shuffle Cards at the very beginning
 	shuffle(cardOptions);
 	// Launch a starting game
-	newGame();
+	$('.card').on('click', startGame);
 	$('li.card').attr('class', 'card');
 });
