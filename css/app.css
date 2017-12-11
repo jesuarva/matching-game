@@ -108,6 +108,30 @@ h1 {
     float: right;
     cursor: pointer;
 }
+.score-panel .restart span {
+  margin-right: 15px;
+}
+.play-button {
+  width: 30%;
+  margin: 0px auto 10px;
+  box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+  background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+  padding: 32px;
+  border-radius: 10px;
+  cursor: pointer;
+
+}
+.play-button:focus,
+.play-button:hover {
+box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.1);
+background: linear-gradient(160deg, #aa7ecd 0%, #02ccba 100%);
+/*font-size: 30px;*/
+transition: 0.2s box-shadow ease-in-out,
+            0.2s background-color ease-in-out,
+            0.2s border-color ease-in-out
+            /*0.3s font-size ease-in-out;*/
+}
+
 * .hidden {
   visibility: hidden;
 }
@@ -125,7 +149,7 @@ h1 {
   display: none;
 }
 
-.resul-deck {
+.result-deck, .welcome-deck {
   width: 400px;
   min-height: auto;
   background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
@@ -143,7 +167,10 @@ h1 {
   top: 300px;
   z-index: 1;
 }
-.message-win-lose {
+.welcome-deck h1{
+  font-size: 2em;
+}
+.message-win-lose, .message-welcome-pane {
   display: block;
   text-align: center;
   width: 390px;

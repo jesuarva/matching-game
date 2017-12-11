@@ -1,3 +1,4 @@
+
 /* VARIABLES */
 var gamesPlayed = 0;
 var dashboardPositions = [0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
@@ -187,7 +188,9 @@ var startTimer = function(){
 
 // START GAME
 var startGame = function () {
-	$('.card').off('click');
+	$('#welcome-pane').off('click');
+	$('#welcome-pane').toggle('noVisible');
+	$('.deck').fadeTo('slow', '1');
 	newGame();
 };
 // newGame
@@ -195,6 +198,8 @@ function newGame () {
 	clearInterval(timer);
 	shuffle(dashboardPositions);
 	setDashboardCards();
+	$('li.card').attr('class', 'card match');
+	setTimeout(function(){ $('li.card').attr('class', 'card');}, 450);
 	startTimer();
 	setStartingValues();
 	$('.moves').text(moves);
@@ -204,10 +209,8 @@ function newGame () {
 var restartGame = function () {
 	$('.card').off('click');
 	$('#result-pane').attr('class', 'container noVisible')
-	$('li.card').attr('class', 'card match');
 	$('.deck').fadeTo('slow', '1');
 	newGame();
-	setTimeout(function(){ $('li.card').attr('class', 'card');}, 450);
 	console.log('matchedCards = '+matchedCards);
 };
 
@@ -238,7 +241,7 @@ var youWinYouLose = function(){
 		$('.deck').fadeTo('slow', '0.5');
 		$('#result-pane').toggleClass('noVisible');
 		// $('.youWin').toggleClass('noVisible');
-		$('.message-win-lose').html('Fantastic! you win.');
+		$('.message-win-lose').html('<h1>Fantastic! you win.</h1>');
 	}
 };
 var youLose = function(){
@@ -247,7 +250,7 @@ var youLose = function(){
 			$('.deck').fadeTo('slow', '0.5');
 			$('#result-pane').toggleClass('noVisible');
 			// $('.youLose').toggleClass('noVisible');
-			$('.message-win-lose').html('No luck! try again.');
+			$('.message-win-lose').html('<h1>You can do it better! try again.</h1>');
 };
 // If cards are equals remove on.click event and disallow on.click functionality.
 function cardsMatch () {
@@ -302,6 +305,7 @@ var actionOnClic = function(){
 
 	} //end if (compareCard.length == 2)
 };
+// Logic when clicking a card
 function	cardOnClick() {
 	 // $('.card').on('click', function (e){})
 	 $('.card').on('click', actionOnClic);
@@ -320,6 +324,45 @@ $(function (){
 	// Shuffle Cards at the very beginning
 	shuffle(cardOptions);
 	// Launch a starting game
-	$('.card').on('click', startGame);
-	$('li.card').attr('class', 'card');
+	$('#welcome-pane').on('click', startGame);
+	$('li.card').attr('class', 'card open');
+	$('.deck').fadeTo('slow', '0.2');
 });
+
+/* TESTING LOCAL STORAGE */
+// Function from @MDN
+// Here is a function that detects whether localStorage is both supported and available:
+function storageAvailable(type) {
+    try {
+        var storage = window[type],
+            x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+            // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            storage.length !== 0;
+    }
+}
+
+console.log('localStorage available: '+storageAvailable("localStorage"));
+console.log('sessionStorage available: '+storageAvailable("sessionStorage"));
+alert('localStorage available: '+storageAvailable('localStorage')+'\n'+'sessionStorage available: '+storageAvailable('sessionStorage'));
+if (storageAvailable("localStorage")){
+
+} else {
+
+}
+
+/* END TESTING LOCAL STORAGE */
