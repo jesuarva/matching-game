@@ -21,6 +21,10 @@ body {
     font-family: 'Coda', cursive;
 }
 
+.game-body {
+  position: relative;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -135,7 +139,10 @@ transition: 0.2s box-shadow ease-in-out,
 * .hidden {
   visibility: hidden;
 }
-/* Style for timer panel */
+
+/*
+ * Style for timer panel
+ */
 .timer-win-lose {
   margin: auto;
 }
@@ -166,6 +173,10 @@ transition: 0.2s box-shadow ease-in-out,
   position: absolute;
   top: 300px;
   z-index: 1;
+}
+.welcome-deck {
+  position: absolute;
+  top: 30%;
 }
 .welcome-deck h1{
   font-size: 2em;

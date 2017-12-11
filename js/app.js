@@ -55,19 +55,6 @@ var timer,
 var stars = 3, attemp = [24,34,40];
 /* END VARIABLES */
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
-/* At game start:
- *	1 - Shufle cardOptions array.
- * 	2 - Shuffle dashboardPositions array.
- *	3 - Assign the (4 * gamesPlayed) first cards from cardOptions array to $('li.card i.fa') elements.
- *		3.1 Increase gamesPlayed by 1
- */
-
 /*GAME LOGIC*/
 
 /* FUNCTIONS */
@@ -87,8 +74,8 @@ function shuffle(array) {
     return array;
 }
 
-// 3 - Assign the (8 * gamesPlayed) first cards from cardOptions array to $('li.card i.fa') elements.
-// 	3.1 Increase gamesPlayed by 1
+// Assign the (8 * gamesPlayed) first cards from cardOptions array to $('li.card i.fa') elements.
+// Increase gamesPlayed by 1
 function setDashboardCards () {
 	var htmlCards = $('li.card');
 	var htmlCardsIndex = 0;
@@ -101,8 +88,6 @@ function setDashboardCards () {
 		$('li.card i.fa').eq(dashboardPositions[i+1]).attr('class', 'fa '+cardOptions[j+gamesPlayed]);
 		j++;
 	}
-
-	gamesPlayed++;
 }
 // Hide all cards
 function hideAllCards (){}
@@ -204,6 +189,7 @@ function newGame () {
 	setStartingValues();
 	$('.moves').text(moves);
 	cardOnClick();
+	gamesPlayed++;
 }
 // Restart game
 var restartGame = function () {
@@ -233,8 +219,7 @@ function hideCard () {
  	compareCard = [];
  }
 // Game is finished?
-// var win = function () { if(matchedCards === gameLevel){return true;} else { return false;} };
-var youWinYouLose = function(){
+var youWin = function(){
 	if ( matchedCards === gameLevel ){
 		clearInterval(timer);
 		$('.card').off('click');
@@ -263,7 +248,7 @@ function cardsMatch () {
 	compareCard = [];
 	matchedCards++;
 	console.log('matchedCards ='+matchedCards);
-	youWinYouLose();
+	youWin();
 }
 // Set on.click event for cards.
 var actionOnClic = function(){
@@ -281,12 +266,6 @@ var actionOnClic = function(){
 	console.log('moves ='+moves);
 	// Logic when 2 cards have been cliked.
 	if( compareCard.length == 2 ){
-		/* DIDN'T WORK
-			// // toggle to open
-			// $(this).toggleClass('open');
-			// // toggle to visible
-			// $(this).toggleClass('show');
-		*/
 		console.log(compareCard[1][1]);
 		console.log(compareCard[0][1]);
 		console.log("cartas son iguales? "+ (compareCard[0][1] === compareCard[1][1]));
@@ -305,6 +284,7 @@ var actionOnClic = function(){
 
 	} //end if (compareCard.length == 2)
 };
+
 // Logic when clicking a card
 function	cardOnClick() {
 	 // $('.card').on('click', function (e){})
@@ -318,15 +298,18 @@ function	cardOnClick() {
 /* LAUNCH APP.JS */
 $(function (){
 	/* Launch event handlers */
-	// card.on.click
-	// cardOnClick();
 	$('.restart').on('click', restartGame);
 	// Shuffle Cards at the very beginning
 	shuffle(cardOptions);
-	// Launch a starting game
-	$('#welcome-pane').on('click', startGame);
-	$('li.card').attr('class', 'card open');
+	// Set sample dashboard for the welcome-pane
+	setDashboardCards();
+	// show smaple dashboard for the welcome-pane
+	$('li.card').attr('class', 'card open show');
 	$('.deck').fadeTo('slow', '0.2');
+	// WELCOME-PANE: event listener to Play button
+	$('#welcome-pane .play-button').on('click', startGame);
+
+
 });
 
 /* TESTING LOCAL STORAGE */
@@ -358,7 +341,7 @@ function storageAvailable(type) {
 
 console.log('localStorage available: '+storageAvailable("localStorage"));
 console.log('sessionStorage available: '+storageAvailable("sessionStorage"));
-alert('localStorage available: '+storageAvailable('localStorage')+'\n'+'sessionStorage available: '+storageAvailable('sessionStorage'));
+// alert('localStorage available: '+storageAvailable('localStorage')+'\n'+'sessionStorage available: '+storageAvailable('sessionStorage'));
 if (storageAvailable("localStorage")){
 
 } else {
